@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Show distribution
+{% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-text">
+            Your endowment is: <b>{{player.endowment|c}}</b></div>
+    </div>
+</div>
+<ul class="list-group list-group-flush my-3"></ul>
+{% for l in participant.vars.lotteries %}
+
+<li class="list-group-item">{{l}}</li>
+
+
+{% endfor %}
+</ul>
+<div class="my-3"> {% next_button %}</div>
+
+{% endblock %}

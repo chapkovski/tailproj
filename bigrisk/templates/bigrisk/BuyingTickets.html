@@ -1,0 +1,46 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-text">
+            Your endowment is: <b>{{player.endowment|c}}</b></div>
+    </div>
+</div>
+<ul class="list-group list-group-flush my-3"></ul>
+{% for l in participant.vars.lotteries %}
+
+<li class="list-group-item">{{l}}</li>
+
+
+{% endfor %}
+</ul>
+
+<table class="table table-hover table-stripped my-3">
+<thead>
+<tr>
+<th>Number of tickets
+</th>
+<th>Portion</th>
+</tr></thead>
+{% for t in Constants.tickets  %}
+<tr>
+        <td>{{t.n}}</td>
+        <td>{{t.portion}}</td>
+    </tr>
+{% endfor %}
+    
+</table>
+<div class="alert alert-info my-3">
+    {%formfields%}
+</div>
+<div class="my-3"> {% next_button %}</div>
+
+{% endblock %}
