@@ -6,8 +6,18 @@ Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
 {% endblock %}
 
 {% block content %}
+{% autoescape off%}
+<table class="table table-hover table-stripped">
+    {% for i in data_to_show %}
+    <tr>
+        <td>{{i.label}}
+        </td>
+        <td>{{i.field}} </td>
+    </tr>
+    {% endfor %}
+</table>
 
-
+{% endautoescape %}
 <div class="card">
     <div class="card-body">
         <div class="card-text">
@@ -24,23 +34,22 @@ Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
 </ul>
 
 <table class="table table-hover table-stripped my-3">
-<thead>
-<tr>
-<th>Number of tickets
-</th>
-<th>Portion</th>
-</tr></thead>
-{% for t in Constants.tickets  %}
-<tr>
+    <thead>
+        <tr>
+            <th>Number of tickets
+            </th>
+            <th>Portion</th>
+        </tr>
+    </thead>
+    {% for t in Constants.tickets %}
+    <tr>
         <td>{{t.n}}</td>
         <td>{{t.portion}}</td>
     </tr>
-{% endfor %}
-    
+    {% endfor %}
+
 </table>
-<div class="alert alert-info my-3">
-    {%formfields%}
-</div>
+ 
 <div class="my-3"> {% next_button %}</div>
 
 {% endblock %}
