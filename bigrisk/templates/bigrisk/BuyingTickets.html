@@ -6,24 +6,91 @@ Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
 {% endblock %}
 
 {% block content %}
-{% autoescape off%}
-<table class="table table-hover table-stripped">
-    {% for i in data_to_show %}
-    <tr>
-        <td>{{i.label}}
-        </td>
-        <td>{{i.field}} </td>
-    </tr>
-    {% endfor %}
-</table>
-
-{% endautoescape %}
-<div class="card">
-    <div class="card-body">
-        <div class="card-text">
-            Your endowment is: <b>{{player.endowment|c}}</b></div>
-    </div>
+<div class="card my-3">
+  <div class="card-body">
+    <div class="card-text">
+      Your endowment is: <b>{{player.endowment|c}}</b></div>
+  </div>
 </div>
+<style>
+  .error {
+    border-color: red;
+  }
+</style>
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://unpkg.com/vue-router@4"></script>
+<script>
+
+</script>
+
+<div id="app">
+  {% verbatim %}
+  <h5>At each of the following price levels, how many tickets you would like to purchase?</h5>
+  <div class="alert alert-info lead text-center">
+    Remember: only one of these price levels will be chosen at the end!</div>
+  <table class="table table-hover table-stripped my-3">
+    <thead>
+      <tr>
+        <th>Price Level:</th>
+        <th>Tickets:</th>
+        <th>Spent:</th>
+        <th>Left:</th>
+        <th style="max-width: 20%; width:20%!important">{{prob_msg}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(price, index) in prices" :key="index">
+        <td>${{ price.toFixed(2) }}</td>
+        <td>
+          <input :name="`num_tickets_${index+1}`" required :class="{ 'error': spent[index] > budget }"
+            class="form-control" type="number" min="0" :max="getMaxTickets(price)" v-model.number="tickets[index]"
+            @input="calculateSpentAndLeft(index, price)" />
+        </td>
+        <td>${{ formatNumber(spent[index]) }}</td>
+        <td>${{ formatNumber(left[index]) }}</td>
+        <td>{{ getProbability(tickets[index]) }}</td>
+      </tr>
+    </tbody>
+  </table>
+  {% endverbatim %}
+</div>
+
+<script>
+  const app = Vue.createApp({
+    data() {
+      const prob_msg = js_vars.negative ? 'Proportion of damage insured:' : 'Proportion of price to win:'
+      return {
+        prob_msg,
+        probabilities: js_vars.probs,
+        prices: js_vars.prices,
+        tickets: Array(js_vars.prices.length).fill(null),  // Assume that we have five price levels
+        spent: Array(js_vars.prices.length).fill(null),
+        budget: js_vars.endowment,
+        left: Array(js_vars.prices.length).fill(js_vars.endowment),
+      }
+    },
+    methods: {
+      formatNumber(number) {
+        return number ? number.toFixed(2) : '0.00';
+      },
+      getMaxTickets(price) {
+        return Math.floor(this.budget / price);
+      },
+      calculateSpentAndLeft(index, price) {
+        this.spent[index] = (this.tickets[index] * price);
+        this.left[index] = this.budget - this.spent[index];
+      },
+      getProbability(ticketsQuantity) {
+        return this.probabilities[ticketsQuantity - 1] ? Object.values(this.probabilities[ticketsQuantity - 1])[0] : 0;
+      }
+    }
+  });
+
+  app.mount('#app');
+</script>
+
+ <div class="my-3"> {% next_button %}</div>
+
 <ul class="list-group list-group-flush my-3"></ul>
 {% for l in participant.vars.lotteries %}
 
@@ -34,22 +101,22 @@ Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
 </ul>
 
 <table class="table table-hover table-stripped my-3">
-    <thead>
-        <tr>
-            <th>Number of tickets
-            </th>
-            <th>Portion</th>
-        </tr>
-    </thead>
-    {% for t in Constants.tickets %}
+  <thead>
     <tr>
-        <td>{{t.n}}</td>
-        <td>{{t.portion}}</td>
+      <th>Number of tickets
+      </th>
+      <th>Portion</th>
     </tr>
-    {% endfor %}
+  </thead>
+  {% for t in Constants.tickets %}
+  <tr>
+    <td>{{t.n}}</td>
+    <td>{{t.formatted_portion }} </td>
+  </tr>
+  {% endfor %}
 
 </table>
- 
-<div class="my-3"> {% next_button %}</div>
+
+
 
 {% endblock %}

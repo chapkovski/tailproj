@@ -36,7 +36,8 @@ class Constants(BaseConstants):
     with open(f'{path_to_data}tickets.csv', 'r') as f:
         reader = csv.DictReader(f)
         tickets = list(reader)
-        print(tickets)
+        tickets=[{**i, 'formatted_portion':f"{float(i.get('portion')):.2%}"} for i in tickets]
+      
 
 
 class Subsession(BaseSubsession):
@@ -80,3 +81,8 @@ class Player(BasePlayer):
     endowment = models.IntegerField()
     chosen_num_tickets = models.IntegerField()
     tail = models.BooleanField()
+
+
+    # comprehension questions block
+
+    # END OF comprehension questions block

@@ -33,6 +33,13 @@ SESSION_CONFIGS = [
         negative=True,
         app_sequence=['bigrisk']
     ),
+        dict(
+        name='post_q',
+         display_name="Post-experimental questionnaire",
+        num_demo_participants=1,
+        
+        app_sequence=['q']
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
