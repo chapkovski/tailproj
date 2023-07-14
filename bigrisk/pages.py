@@ -1,20 +1,39 @@
 from otree.api import Currency as c, currency_range
-from ._builtin import Page, WaitPage
+from ._builtin import Page as oTreePage, WaitPage
 from .models import Constants
 
 
+class Page(oTreePage):
+    instructions_path = "bigrisk/includes/instructions.html"
+    instructions = False
+     
+    def get_context_data(self, **context):
+        r = super().get_context_data(**context)
+        r['instructions_google_doc']=self.session.config.get('instructions_path')
+        r["maxpages"] = self.participant._max_page_index
+        r["page_index"] = self._index_in_pages
+        r[
+            "progress"
+        ] = f"{int(self._index_in_pages / self.participant._max_page_index * 100):d}"
+        r["instructions"] = self.instructions
+        
+        return r
+
 class CQPage(Page):
+    instructions=True
     def js_vars(self):
         return dict(endowment=self.player.endowment)
     def is_displayed(self):
         return self.round_number == 1
     
 class ShowTails(Page):
+    instructions=True
     def is_displayed(self):
         return self.round_number == 1
 
 
 class BuyingTickets(Page):
+    instructions=True
     def js_vars(self):
         p=self.player
         prices=[getattr(p, f'ticket_price_{i}') for i in range(1,6)]
@@ -41,7 +60,7 @@ class BuyingTickets(Page):
         p.chosen_num_tickets = getattr(p, f'num_tickets_{p.ticket_chosen}')
     form_fields = ['num_tickets_1','num_tickets_2','num_tickets_3','num_tickets_4','num_tickets_5']
 class Results(Page):
-    pass
+    instructions=True
     
 page_sequence = [CQPage,
     ShowTails,

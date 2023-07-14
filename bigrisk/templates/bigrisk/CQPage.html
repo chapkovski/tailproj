@@ -12,16 +12,16 @@ Comprehension questions
 <div id="app" class="container mt-5">
 
     <form @submit.prevent="checkAnswers">
-        <div class="mb-3 d-flex">
+        <div class="mb-3 d-flex flex-wrap">
             <span class="mx-3">In each class</span>
             <select style="max-width:200px" class="form-select" v-model="answers[0]"
-                :class="{ 'is-invalid': isInvalid[0] }">
+                :class="{ 'is-invalid': isInvalid[0] }" required>
                 <option disabled value="">Please select one</option>
                 <option v-for="option in questions[0].options" :value="option">{{ option }}</option>
             </select>
             <span class="mx-3"> will be paid for</span>
             <select style="max-width:200px" class="form-select" v-model="answers[1]"
-                :class="{ 'is-invalid': isInvalid[1] }">
+                :class="{ 'is-invalid': isInvalid[1] }" required>
                 <option disabled value="">Please select one</option>
                 <option v-for="option in questions[1].options" :value="option">{{ option }}</option>
             </select>
@@ -37,18 +37,19 @@ Comprehension questions
                     :class="{ 'border border-danger p-3': isInvalid[index] }">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" :name="'answer'+index" :id="'true'+index"
-                            :value="true" v-model="answers[index]">
+                            :value="true" v-model="answers[index]" required >
                         <label class="form-check-label" :for="'true'+index">True</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" :name="'answer'+index" :id="'false'+index"
-                            :value="false" v-model="answers[index]">
+                            :value="false" v-model="answers[index]"
+                            required>
                         <label class="form-check-label" :for="'false'+index">False</label>
                     </div>
                 </div>
                 <div v-else>
                     <input type="number" class="form-control" :id="'answer'+index" v-model="answers[index]"
-                        :class="{ 'is-invalid': isInvalid[index] }">
+                        :class="{ 'is-invalid': isInvalid[index] }" required>
                 </div>
                 <div class="invalid-feedback" v-if="isInvalid[index]">
                     Incorrect answer.
@@ -82,8 +83,8 @@ Comprehension questions
 
                 questions,
 
-                answers: Array(9).fill(''),  // Assuming there are nine questions
-                isInvalid: Array(9).fill(false),
+                answers: Array(10).fill(''),  // Assuming there are nine questions
+                isInvalid: Array(10).fill(false),
             }
         },
         computed: {
@@ -107,7 +108,7 @@ Comprehension questions
                     else {
                         const user_answer = String(this.questions[i].answer).toUpperCase()
                         const to_check = String(this.answers[i]).toUpperCase()
-                        console.debug('JOJP', this.questions[i].answer, to_check)
+                   
                         if (user_answer !== to_check) {
                             this.isInvalid[i] = true;
                         } else {

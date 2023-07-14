@@ -48,6 +48,7 @@ SESSION_CONFIGS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
+    instructions_path='https://docs.google.com/document/d/e/2PACX-1vRDBR-WRDvhZ_SCzAh7VbdyTPpw7r_8aF7Ey3O6GQvKwBrzIhzDIz7kglABfXa16bKMuQJI72RT-a29/pub',
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
