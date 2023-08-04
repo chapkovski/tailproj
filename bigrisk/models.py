@@ -66,8 +66,13 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    consent = models.BooleanField(label='CÓ, TÔI ĐỒNG Ý tham gia nghiên cứu này.',
-                                  widget=widgets.CheckboxInput)
+    def consent_error_message(self, value):
+        if not value:
+            return 'bạn phải chọn "đồng ý" để tiếp tục'
+    consent = models.BooleanField(label='',
+                                  choices=[(True, 'CÓ, TÔI ĐỒNG Ý tham gia nghiên cứu này.'),
+                                           (False, 'KHÔNG, TÔI KHÔNG ĐỒNG Ý tham gia nghiên cứu này.')],
+                                  widget=widgets.RadioSelect)
     num_tickets_1 = models.IntegerField(min=0, max=20)
     num_tickets_2 = models.IntegerField(min=0, max=20)
     num_tickets_3 = models.IntegerField(min=0, max=20)
