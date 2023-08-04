@@ -20,6 +20,8 @@ class Page(oTreePage):
         return r
 
 class ConsentPage(Page):
+    form_model = 'player'
+    form_fields = ['consent']
     def vars_for_template(self):
             return dict(consent_form_path=self.session.config.get('consent_form_path'))
     

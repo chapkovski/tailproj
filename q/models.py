@@ -33,6 +33,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
         # DEMOGRAPHICS
+    
     age = models.StringField(label='What is your age?', choices=choices.AGE_CHOICES, widget=widgets.RadioSelect)
     education = models.StringField(
         label="What is the highest degree or level of school you have completed?",

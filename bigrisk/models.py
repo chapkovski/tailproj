@@ -66,6 +66,8 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    consent = models.BooleanField(label='CÓ, TÔI ĐỒNG Ý tham gia nghiên cứu này.',
+                                  widget=widgets.CheckboxInput)
     num_tickets_1 = models.IntegerField(min=0, max=20)
     num_tickets_2 = models.IntegerField(min=0, max=20)
     num_tickets_3 = models.IntegerField(min=0, max=20)
