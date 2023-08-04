@@ -19,6 +19,10 @@ class Page(oTreePage):
         
         return r
 
+class ConsentPage(Page):
+    def vars_for_template(self):
+            return dict(consent_form_path=self.session.config.get('consent_form_path'))
+    
 class CQPage(Page):
     instructions=True
     def js_vars(self):
@@ -62,7 +66,9 @@ class BuyingTickets(Page):
 class Results(Page):
     instructions=True
     
-page_sequence = [CQPage,
-    ShowTails,
+page_sequence = [
+    ConsentPage,
+    CQPage,
+            ShowTails,
                  BuyingTickets,
                  Results]

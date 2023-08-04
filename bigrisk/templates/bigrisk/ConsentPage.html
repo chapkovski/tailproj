@@ -1,0 +1,15 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Consent form
+{% endblock %}
+
+{% block content %}
+<iframe
+    width="100%"
+    height="1000"
+    src="{{consent_form_path}}?embedded=true"></iframe>
+    {% next_button %}
+
+{% endblock %}
