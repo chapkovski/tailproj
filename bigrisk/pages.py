@@ -20,6 +20,8 @@ class Page(oTreePage):
         return r
 
 class ConsentPage(Page):
+    def is_displayed(self):
+        return self.round_number == 1
     form_model = 'player'
     form_fields = ['consent']
     def vars_for_template(self):
