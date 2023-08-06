@@ -1,5 +1,5 @@
 from os import environ
-
+app_seq=['bigrisk','q']
 SESSION_CONFIGS = [
     dict(
         name='median_pos',
@@ -7,7 +7,7 @@ SESSION_CONFIGS = [
         num_demo_participants=3,
         tail=False,
         negative=False,
-        app_sequence=['bigrisk']
+        app_sequence=app_seq
     ),
     dict(
         name='median_neg',
@@ -15,7 +15,7 @@ SESSION_CONFIGS = [
         num_demo_participants=3,
         tail=False,
         negative=True,
-        app_sequence=['bigrisk']
+        app_sequence=app_seq
     ),
     dict(
         name='tail_pos',
@@ -23,15 +23,14 @@ SESSION_CONFIGS = [
         num_demo_participants=3,
         tail=True,
         negative=False,
-        app_sequence=['bigrisk']
-    ),
+        app_sequence=app_seq),
     dict(
         name='tail_neg',
          display_name="Tail, negative",
         num_demo_participants=3,
         tail=True,
         negative=True,
-        app_sequence=['bigrisk']
+        app_sequence=app_seq
     ),
         dict(
         name='post_q',

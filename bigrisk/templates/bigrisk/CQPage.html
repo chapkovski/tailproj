@@ -37,13 +37,12 @@ Comprehension questions
                     :class="{ 'border border-danger p-3': isInvalid[index] }">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" :name="'answer'+index" :id="'true'+index"
-                            :value="true" v-model="answers[index]" required >
+                            :value="true" v-model="answers[index]" required>
                         <label class="form-check-label" :for="'true'+index">True</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" :name="'answer'+index" :id="'false'+index"
-                            :value="false" v-model="answers[index]"
-                            required>
+                            :value="false" v-model="answers[index]" required>
                         <label class="form-check-label" :for="'false'+index">False</label>
                     </div>
                 </div>
@@ -65,18 +64,23 @@ Comprehension questions
     const app = Vue.createApp({
         data() {
             const endowment = js_vars.endowment;
+            
+            const negative_questions = js_vars.negative ? [{ question: "If you buy many tickets, you are insured against a larger portion of the event outcome", answer: true },
+            { question: "If you buy a small number of tickets, you are insured against a larger portion of the event outcome", answer: false },] : []
+
             const endowments = Array(5).fill(endowment).map((element, index) => endowment * (index + 1))
             const questions = [
                 { question: "In each class _________ students will be paid for __________ rounds.", answer: "One student", options: ["One student", "Two students", 'Three students', 'Four students', 'Five students'] },
                 { question: "In each class _________ students will be paid for __________ rounds.", answer: "1", options: ["1", "2", "3", "4", '5'] },
                 { question: "How much do you start with?", answer: endowment, options: [endowments] },
-                { question: "How many rounds will you be playing?", answer: 1 },
+                { question: "How many rounds will you be playing?", answer: js_vars.num_rounds },
                 { question: "If you buy many tickets, you keep a larger portion of the event outcome", answer: false },
-                { question: "If you buy many tickets, you are insured against a larger portion of the event outcome", answer: true },
+
                 { question: "If you buy a small number of tickets, you keep a larger portion of the event outcome", answer: false },
-                { question: "If you buy a small number of tickets, you are insured against a larger portion of the event outcome", answer: false },
+
                 { question: "The (insurance/lottery) tickets are free.", answer: false },
                 { question: "There are several different prices at which (insurance/lottery) tickets are presented, only one of which will be randomly chosen.", answer: false },
+                ...negative_questions,
             ]
 
             return {
@@ -108,7 +112,7 @@ Comprehension questions
                     else {
                         const user_answer = String(this.questions[i].answer).toUpperCase()
                         const to_check = String(this.answers[i]).toUpperCase()
-                   
+
                         if (user_answer !== to_check) {
                             this.isInvalid[i] = true;
                         } else {

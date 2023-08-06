@@ -9,7 +9,7 @@ from otree.api import (
     currency_range,
 )
 import csv
-
+from pprint import pprint
 import random
 author = 'Philipp Chapkovski, UBonn'
 
@@ -37,7 +37,9 @@ class Constants(BaseConstants):
         reader = csv.DictReader(f)
         tickets = list(reader)
         tickets=[{**i, 'formatted_portion':f"{float(i.get('portion')):.2%}"} for i in tickets]
-      
+    with open(f'{path_to_data}heavytail.csv', 'r') as f:
+        tails = [float(line.strip()) for line in f.readlines()]      
+        
 
 
 class Subsession(BaseSubsession):
@@ -59,6 +61,7 @@ class Subsession(BaseSubsession):
                 setattr(p, f'ticket_price_{i}', price)
             p.ticket_chosen=random.randint(1,5)
             p.price_chosen=getattr(p, f'ticket_price_{p.ticket_chosen}')
+            p.personal_outcome=random.choice(Constants.tails)
 
 
 class Group(BaseGroup):
@@ -88,7 +91,7 @@ class Player(BasePlayer):
     endowment = models.IntegerField()
     chosen_num_tickets = models.IntegerField()
     tail = models.BooleanField()
-
+    personal_outcome = models.FloatField()
 
     # comprehension questions block
 
