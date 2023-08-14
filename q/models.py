@@ -1,4 +1,4 @@
-from otree.api import (
+﻿from otree.api import (
     models,
     widgets,
     BaseConstants,
@@ -10,7 +10,7 @@ from otree.api import (
 )
 
 from . import choices
-author = 'Your name here'
+author = 'Tên của bạn'
 
 doc = """
 Your app description
@@ -34,18 +34,18 @@ class Group(BaseGroup):
 class Player(BasePlayer):
         # DEMOGRAPHICS
     
-    age = models.StringField(label='What is your age?', choices=choices.AGE_CHOICES, widget=widgets.RadioSelect)
+    age = models.StringField(label='Tuổi của bạn là?', choices=choices.AGE_CHOICES, widget=widgets.RadioSelect)
     education = models.StringField(
-        label="What is the highest degree or level of school you have completed?",
+        label="bằng cấp (học vấn) cao nhất mà bạn đã từng học?",
         choices=choices.EDUCATION_CHOICES, widget=widgets.RadioSelect)
-    gender = models.StringField(label='What is your gender?',
+    gender = models.StringField(label='Giới tính của bạn?',
                                  choices=choices.GENDER_CHOICES, widget=widgets.RadioSelect)
-    marital = models.StringField(label='What is your marital status?',
+    marital = models.StringField(label='Tình trạng hôn nhân của bạn?',
                                   choices=choices.MARITAL_CHOICES, widget=widgets.RadioSelect)
-    employment = models.StringField(label='What is your current employment status?',
+    employment = models.StringField(label='Tình trạng việc làm hiện tại của bạn?',
                                      choices=choices.EMPLOYMENT_CHOICES, widget=widgets.RadioSelect)
     income = models.StringField(
-        label="What is your annual household income?",
+        label="Thu nhập hàng năm của gia đình bạn là?",
         choices=choices.INCOME_CHOICES,
         widget=widgets.RadioSelect()
     )

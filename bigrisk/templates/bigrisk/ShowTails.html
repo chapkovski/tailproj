@@ -1,8 +1,8 @@
-{% extends "global/Page.html" %}
+﻿{% extends "global/Page.html" %}
 {% load otree static %}
 
 {% block title %}
-Show distribution. Round {{view.round_number}} out of {{Constants.num_rounds}}
+Tỷ lệ các kết quả. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
 {% endblock %}
 
 {% block content %}
@@ -11,7 +11,7 @@ Show distribution. Round {{view.round_number}} out of {{Constants.num_rounds}}
 <div class="card">
     <div class="card-body">
         <div class="card-text">
-            Your endowment is: <b>{{player.endowment|c}}</b></div>
+            Tổng tiền khởi đầu của bạn là: <b>{{player.endowment|c}}</b></div>
     </div>
 </div>
 <ul class="list-group list-group-flush my-3"></ul>

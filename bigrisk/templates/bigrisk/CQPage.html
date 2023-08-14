@@ -1,4 +1,4 @@
-{% extends "global/Page.html" %}
+﻿{% extends "global/Page.html" %}
 {% load otree static %}
 
 {% block title %}
@@ -64,22 +64,17 @@ Comprehension questions
     const app = Vue.createApp({
         data() {
             const endowment = js_vars.endowment;
-            
-            const negative_questions = js_vars.negative ? [{ question: "If you buy many tickets, you are insured against a larger portion of the event outcome", answer: true },
-            { question: "If you buy a small number of tickets, you are insured against a larger portion of the event outcome", answer: false },] : []
-
             const endowments = Array(5).fill(endowment).map((element, index) => endowment * (index + 1))
             const questions = [
-                { question: "In each class _________ students will be paid for __________ rounds.", answer: "One student", options: ["One student", "Two students", 'Three students', 'Four students', 'Five students'] },
-                { question: "In each class _________ students will be paid for __________ rounds.", answer: "1", options: ["1", "2", "3", "4", '5'] },
-                { question: "How much do you start with?", answer: endowment, options: [endowments] },
-                { question: "How many rounds will you be playing?", answer: js_vars.num_rounds },
-                { question: "If you buy many tickets, you keep a larger portion of the event outcome", answer: false },
+                { question: "Ở mỗi lớp _________ Học sinh sẽ được nhận __________ mỗi vòng.", answer: "Một học sinh", options: ["Một học sinh", "Hai học sinh", 'Ba học sinhs', 'Bốn học sinh', 'Năm học sinh'] },
+                { question: "Ở mỗi lớp _________ Học sinh sẽ được nhận __________ mỗi vòng.", answer: "1", options: ["1", "2", "3", "4", '5'] },
+                { question: "Tổng số tiền bạn có đầu mỗi vòng là?", answer: endowment, options: [endowments] },
+                { question: "Có bao nhiêu vòng chơi tổng cộng?", answer: js_vars.num_rounds },
+                { question: "Nếu bạn mua nhiều vé, bạn sẽ có cơ hội thắng lớn hơn", answer: false },
+                { question: "Nếu bạn mua ít vé, bạn sẽ có cơ hội thắng lớn hơn", answer: false },
 
-                { question: "If you buy a small number of tickets, you keep a larger portion of the event outcome", answer: false },
-
-                { question: "The (insurance/lottery) tickets are free.", answer: false },
-                { question: "There are several different prices at which (insurance/lottery) tickets are presented, only one of which will be randomly chosen.", answer: false },
+                { question: "Vé (vé số hoặc bảo hiểm) là miễn phí (bạn sẽ không mất tiền để mua chúng).", answer: false },
+                { question: "Giá hiển thị của vé (vé số hoặc bảo hiểm) là khác nhau, và chỉ MỘT trong số chúng sẽ được chọn ngẫu nhiên.", answer: true },
                 ...negative_questions,
             ]
 

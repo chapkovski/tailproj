@@ -1,4 +1,4 @@
-{% extends "global/Page.html" %}
+﻿{% extends "global/Page.html" %}
 {% load otree static %}
 
 {% block title %}
@@ -25,16 +25,16 @@ Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
 
 <div id="app">
   {% verbatim %}
-  <h5>At each of the following price levels, how many tickets you would like to purchase?</h5>
-  <div class="alert alert-info lead text-center">
-    Remember: only one of these price levels will be chosen at the end!</div>
+    <h5>Ở mỗi mức giá sau đây, bạn muốn mua bao nhiêu vé??</h5>
+    <div class="alert alert-info lead text-center">
+        Lưu ý: Chỉ một trong những mức giá sau đây sẽ được chọn!</div>
   <table class="table table-hover table-stripped my-3">
     <thead>
       <tr>
-        <th>Price Level:</th>
-        <th>Tickets:</th>
-        <th>Spent:</th>
-        <th>Left:</th>
+        <th>Mức giá:</th>
+        <th>Số lượng vé:</th>
+        <th>Đã chi:</th>
+        <th>Còn lại:</th>
         <th style="max-width: 20%; width:20%!important">{{prob_msg}}</th>
       </tr>
     </thead>
