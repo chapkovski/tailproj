@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-Comprehension questions
+Câu hơi kiểm tra độ hiểu trò chơi
 {% endblock %}
 
 {% block content %}
@@ -13,19 +13,19 @@ Comprehension questions
 
     <form @submit.prevent="checkAnswers">
         <div class="mb-3 d-flex flex-wrap">
-            <span class="mx-3">In each class</span>
+            <span class="mx-3">Ở mỗi lớp</span>
             <select style="max-width:200px" class="form-select" v-model="answers[0]"
                 :class="{ 'is-invalid': isInvalid[0] }" required>
-                <option disabled value="">Please select one</option>
+                <option disabled value="">chọn một</option>
                 <option v-for="option in questions[0].options" :value="option">{{ option }}</option>
             </select>
-            <span class="mx-3"> will be paid for</span>
+            <span class="mx-3"> sẽ trả </span>
             <select style="max-width:200px" class="form-select" v-model="answers[1]"
                 :class="{ 'is-invalid': isInvalid[1] }" required>
-                <option disabled value="">Please select one</option>
+                <option disabled value="">chọn một </option>
                 <option v-for="option in questions[1].options" :value="option">{{ option }}</option>
             </select>
-            <span class="mx-3"> round. </span>
+            <span class="mx-3"> vòng. </span>
         </div>
 
 
@@ -38,12 +38,12 @@ Comprehension questions
                     <div class="form-check">
                         <input class="form-check-input" type="radio" :name="'answer'+index" :id="'true'+index"
                             :value="true" v-model="answers[index]" required>
-                        <label class="form-check-label" :for="'true'+index">True</label>
+                        <label class="form-check-label" :for="'true'+index">Đúng</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" :name="'answer'+index" :id="'false'+index"
                             :value="false" v-model="answers[index]" required>
-                        <label class="form-check-label" :for="'false'+index">False</label>
+                        <label class="form-check-label" :for="'false'+index">Sai</label>
                     </div>
                 </div>
                 <div v-else>
@@ -56,7 +56,7 @@ Comprehension questions
 
             </div>
         </div>
-        <button type="button" @click="checkAnswers" class="btn btn-primary">Submit</button>
+        <button type="button" @click="checkAnswers" class="btn btn-primary">nộp</button>
     </form>
 </div>
 
@@ -64,20 +64,19 @@ Comprehension questions
     const app = Vue.createApp({
         data() {
             const endowment = js_vars.endowment;
-             const negative_questions = js_vars.negative ? [{ question: "If you buy many tickets, you are insured against a larger portion of the event outcome", answer: true },
-            { question: "If you buy a small number of tickets, you are insured against a larger portion of the event outcome", answer: false },] : []
-
+            const negative_questions = js_vars.negative ? [{ question: "Nếu bạn mua nhiều vé, tỷ lệ thắng của bạn sẽ cao hơn", answer: true },
+            { question: "Nếu bạn mua ít vé, tỷ lệ thắng của bạn sẽ cao hơn", answer: false },] : []
+            const positive_questions = js_vars.negative ? [] : [{ question: "Nếu bạn mua nhiều vé, tỷ lệ thắng của bạn sẽ cao hơn", answer: false },
+            { question: "Nếu bạn mua ít vé, tỷ lệ thắng của bạn sẽ cao hơn", answer: false },]
             const endowments = Array(5).fill(endowment).map((element, index) => endowment * (index + 1))
             const questions = [
                 { question: "Ở mỗi lớp _________ Học sinh sẽ được nhận __________ mỗi vòng.", answer: "Một học sinh", options: ["Một học sinh", "Hai học sinh", 'Ba học sinhs', 'Bốn học sinh', 'Năm học sinh'] },
                 { question: "Ở mỗi lớp _________ Học sinh sẽ được nhận __________ mỗi vòng.", answer: "1", options: ["1", "2", "3", "4", '5'] },
                 { question: "Tổng số tiền bạn có đầu mỗi vòng là?", answer: endowment, options: [endowments] },
                 { question: "Có bao nhiêu vòng chơi tổng cộng?", answer: js_vars.num_rounds },
-                { question: "Nếu bạn mua nhiều vé, bạn sẽ có cơ hội thắng lớn hơn", answer: false },
-                { question: "Nếu bạn mua ít vé, bạn sẽ có cơ hội thắng lớn hơn", answer: false },
-
                 { question: "Vé (vé số hoặc bảo hiểm) là miễn phí (bạn sẽ không mất tiền để mua chúng).", answer: false },
                 { question: "Giá hiển thị của vé (vé số hoặc bảo hiểm) là khác nhau, và chỉ MỘT trong số chúng sẽ được chọn ngẫu nhiên.", answer: true },
+                ...positive_questions,
                 ...negative_questions,
             ]
 
