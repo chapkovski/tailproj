@@ -64,6 +64,9 @@ Comprehension questions
     const app = Vue.createApp({
         data() {
             const endowment = js_vars.endowment;
+             const negative_questions = js_vars.negative ? [{ question: "If you buy many tickets, you are insured against a larger portion of the event outcome", answer: true },
+            { question: "If you buy a small number of tickets, you are insured against a larger portion of the event outcome", answer: false },] : []
+
             const endowments = Array(5).fill(endowment).map((element, index) => endowment * (index + 1))
             const questions = [
                 { question: "Ở mỗi lớp _________ Học sinh sẽ được nhận __________ mỗi vòng.", answer: "Một học sinh", options: ["Một học sinh", "Hai học sinh", 'Ba học sinhs', 'Bốn học sinh', 'Năm học sinh'] },
