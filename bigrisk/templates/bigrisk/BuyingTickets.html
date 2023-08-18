@@ -2,14 +2,14 @@
 {% load otree static %}
 
 {% block title %}
-Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
+Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
 {% endblock %}
 
 {% block content %}
 <div class="card my-3">
   <div class="card-body">
     <div class="card-text">
-      Your endowment is: <b>{{player.endowment|c}}</b></div>
+      Số tiền của bạn: <b>{{player.endowment|c}}</b></div>
   </div>
 </div>
 <style>
@@ -25,7 +25,7 @@ Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
 
 <div id="app">
   {% verbatim %}
-    <h5>Ở mỗi mức giá sau đây, bạn muốn mua bao nhiêu vé??</h5>
+    <h5>Ở mỗi mức giá sau đây, bạn muốn mua bao nhiêu vé?</h5>
     <div class="alert alert-info lead text-center">
         Lưu ý: Chỉ một trong những mức giá sau đây sẽ được chọn!</div>
   <table class="table table-hover table-stripped my-3">
@@ -58,7 +58,7 @@ Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
 <script>
   const app = Vue.createApp({
     data() {
-      const prob_msg = js_vars.negative ? 'Proportion of damage insured:' : 'Proportion of price to win:'
+      const prob_msg = js_vars.negative ? 'Proportion of damage insured:' : 'Tỉ lệ thắng:'
       return {
         prob_msg,
         probabilities: js_vars.probs,
