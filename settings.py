@@ -51,8 +51,10 @@ SESSION_CONFIG_DEFAULTS = dict(
     instructions_path='https://docs.google.com/document/d/e/2PACX-1vRDBR-WRDvhZ_SCzAh7VbdyTPpw7r_8aF7Ey3O6GQvKwBrzIhzDIz7kglABfXa16bKMuQJI72RT-a29/pub',
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
-ROOMS=[{"name": "room1", "display_name": "Experiment room 1"},
-       {"name": "room2", "display_name": "Experiment room 2"}]
+ROOMS=[{"name": "room1", "display_name": "Experiment room 1",
+          "participant_label_file":'_rooms/tail.txt',},
+       {"name": "room2", "display_name": "Experiment room 2",
+          "participant_label_file":'_rooms/tail.txt',}]
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
 LANGUAGE_CODE = 'en'

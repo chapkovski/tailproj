@@ -22,7 +22,7 @@ Tail, no median lottery project
 class Constants(BaseConstants):
     name_in_url = "bigrisk"
     players_per_group = None
-    num_rounds = 10
+    num_rounds = 2
     POSITIVE_ENDOWMENT = 10
     NEGATIVE_ENDOWMENT = 200
     price_ranges = ((0.01, 0.50), (0.50, 1.50), (1.50, 2.75), (2.75, 5), (5, 10))
@@ -46,6 +46,9 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     def creating_session(self):
+        if self.round_number == 1:
+            for p in self.session.get_participants():
+                p.vars['chosen_round']=random.randint(1,Constants.num_rounds)
         neg = self.session.config.get("negative")
         tail = self.session.config.get("tail")
         endowment = (
@@ -56,6 +59,7 @@ class Subsession(BaseSubsession):
         else:
             lotteries = Constants.lotteries.copy()[:4]
         for p in self.get_players():
+            p.chosen_round=p.participant.vars['chosen_round']
             p.endowment = endowment
             p.tail = tail
             p.participant.vars["lotteries"] = lotteries
@@ -73,6 +77,9 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    def set_final_payoff(self):
+        self.payoff = self.in_round(self.chosen_round).intermediary_payoff
+
     def get_proportion(self):
         t = self.chosen_num_tickets
         prop = t / (t + 1)
@@ -90,6 +97,7 @@ class Player(BasePlayer):
         ],
         widget=widgets.RadioSelect,
     )
+    chosen_round = models.IntegerField()
     num_tickets_1 = models.IntegerField(min=0, max=20)
     num_tickets_2 = models.IntegerField(min=0, max=20)
     num_tickets_3 = models.IntegerField(min=0, max=20)
@@ -106,8 +114,8 @@ class Player(BasePlayer):
     chosen_num_tickets = models.IntegerField()
     tail = models.BooleanField()
     personal_outcome = models.FloatField()
-    intermediary_payoff=models.CurrencyField()
-    
+    intermediary_payoff = models.CurrencyField()
+
     # comprehension questions block
 
     # END OF comprehension questions block

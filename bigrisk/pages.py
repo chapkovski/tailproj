@@ -88,8 +88,13 @@ class BuyingTickets(Page):
     def before_next_page(self):
         p = self.player
         p.chosen_num_tickets = getattr(p, f"num_tickets_{p.ticket_chosen}")
-        perssign=-1 if self.session.config.get("negative") else +1
-        p.intermediary_payoff= p.endowment- p.chosen_num_tickets * p.price_chosen + perssign*p.personal_outcome*p.get_proportion()
+        perssign = -1 if self.session.config.get("negative") else +1
+        p.intermediary_payoff = (
+            p.endowment
+            - p.chosen_num_tickets * p.price_chosen
+            + perssign * p.personal_outcome * p.get_proportion()
+        )
+
     form_fields = [
         "num_tickets_1",
         "num_tickets_2",
@@ -103,13 +108,25 @@ class Results(Page):
     instructions = True
 
     def vars_for_template(self):
-        negative=self.session.config.get("negative")
+        negative = self.session.config.get("negative")
         perssign = "-" if negative else "+"
         return dict(negative=negative, perssign=perssign)
+    def before_next_page(self):
+        if self.round_number==Constants.num_rounds:
+            self.player.set_final_payoff()        
+
+class FinalResults(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
+    pass
 
 
 page_sequence = [
-    ConsentPage, CQPage, ShowTails,
+    ConsentPage,
+    CQPage,
+    ShowTails,
     BuyingTickets,
     Results,
+    FinalResults,
 ]

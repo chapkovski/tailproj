@@ -65,7 +65,7 @@ Câu hơi kiểm tra độ hiểu trò chơi
         data() {
             const endowment = js_vars.endowment;
             const negative_questions = js_vars.negative ? [{ question: "Nếu bạn mua nhiều vé hơn, bạn sẽ giữ lượng phần thưởng lớn hơn, nếu được chọn", answer: true },
-            { question: "Nếu bạn mua ít vé, bạn sẽ giữ lượng phần thưởng lớn hơn, nếu được chọn",   : false },] : []
+            { question: "Nếu bạn mua ít vé, bạn sẽ giữ lượng phần thưởng lớn hơn, nếu được chọn",  answer : false },] : []
             const positive_questions = js_vars.negative ? [] : [{ question: "Nếu bạn mua nhiều vé hơn, bạn sẽ giữ lượng phần thưởng lớn hơn, nếu được chọn", answer: false },
             { question: "Nếu bạn mua ít vé, bạn sẽ giữ lượng phần thưởng lớn hơn, nếu được chọn", answer: false },]
             const endowments = Array(5).fill(endowment).map((element, index) => endowment * (index + 1))
