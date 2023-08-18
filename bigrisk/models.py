@@ -18,7 +18,7 @@ doc = """
 Tail, no median lottery project
 """
 
-
+portion = lambda x: float(1-1/(x+1))
 class Constants(BaseConstants):
     name_in_url = "bigrisk"
     players_per_group = None
@@ -32,14 +32,14 @@ class Constants(BaseConstants):
     with open(f"{path_to_data}lotteries.csv", "r") as f:
         reader = csv.DictReader(f)
         lotteries = [i.get("header") for i in reader]
-
-    with open(f"{path_to_data}tickets.csv", "r") as f:
-        reader = csv.DictReader(f)
-        tickets = list(reader)
-        tickets = [
-            {**i, "formatted_portion": f"{float(i.get('portion')):.2%}"}
-            for i in tickets
-        ]
+    num_tickets=range(1,30)
+    
+    
+    tickets = [
+        {"n":i, "formatted_portion": f"{portion(i):.3%}"}
+        for i in num_tickets
+    ]
+    pprint(tickets)
     with open(f"{path_to_data}heavytail.csv", "r") as f:
         tails = [float(line.strip()) for line in f.readlines()]
 
