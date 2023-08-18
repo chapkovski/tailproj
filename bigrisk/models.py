@@ -22,7 +22,7 @@ Tail, no median lottery project
 class Constants(BaseConstants):
     name_in_url = "bigrisk"
     players_per_group = None
-    num_rounds = 2
+    num_rounds = 10
     POSITIVE_ENDOWMENT = 10
     NEGATIVE_ENDOWMENT = 200
     price_ranges = ((0.01, 0.50), (0.50, 1.50), (1.50, 2.75), (2.75, 5), (5, 10))
