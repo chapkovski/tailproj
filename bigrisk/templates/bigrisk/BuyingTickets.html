@@ -81,7 +81,10 @@ Buying tickets. Round {{view.round_number}} out of {{Constants.num_rounds}}
         this.left[index] = this.budget - this.spent[index];
       },
       getProbability(ticketsQuantity) {
-        return this.probabilities[ticketsQuantity - 1] ? Object.values(this.probabilities[ticketsQuantity - 1])[0] : 0;
+        const t=ticketsQuantity
+        const prob=t/(1+t)*100
+    
+        return prob.toFixed(2)
       }
     }
   });

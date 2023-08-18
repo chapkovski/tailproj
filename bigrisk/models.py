@@ -11,7 +11,8 @@ from otree.api import (
 import csv
 from pprint import pprint
 import random
-author = 'Philipp Chapkovski, UBonn'
+
+author = "Philipp Chapkovski, UBonn"
 
 doc = """
 Tail, no median lottery project
@@ -19,34 +20,37 @@ Tail, no median lottery project
 
 
 class Constants(BaseConstants):
-    name_in_url = 'bigrisk'
+    name_in_url = "bigrisk"
     players_per_group = None
     num_rounds = 10
     POSITIVE_ENDOWMENT = 10
     NEGATIVE_ENDOWMENT = 200
-    price_ranges = ((0.01, 0.50), (0.50, 1.50),
-                    (1.50, 2.75), (2.75, 5), (5, 10))
+    price_ranges = ((0.01, 0.50), (0.50, 1.50), (1.50, 2.75), (2.75, 5), (5, 10))
     # READ THE DATA
-    path_to_data = './data/'
+    path_to_data = "./data/"
 
-    with open(f'{path_to_data}lotteries.csv', 'r') as f:
+    with open(f"{path_to_data}lotteries.csv", "r") as f:
         reader = csv.DictReader(f)
-        lotteries = [i.get('header') for i in reader]
+        lotteries = [i.get("header") for i in reader]
 
-    with open(f'{path_to_data}tickets.csv', 'r') as f:
+    with open(f"{path_to_data}tickets.csv", "r") as f:
         reader = csv.DictReader(f)
         tickets = list(reader)
-        tickets=[{**i, 'formatted_portion':f"{float(i.get('portion')):.2%}"} for i in tickets]
-    with open(f'{path_to_data}heavytail.csv', 'r') as f:
-        tails = [float(line.strip()) for line in f.readlines()]      
-        
+        tickets = [
+            {**i, "formatted_portion": f"{float(i.get('portion')):.2%}"}
+            for i in tickets
+        ]
+    with open(f"{path_to_data}heavytail.csv", "r") as f:
+        tails = [float(line.strip()) for line in f.readlines()]
 
 
 class Subsession(BaseSubsession):
     def creating_session(self):
-        neg = self.session.config.get('negative')
-        tail = self.session.config.get('tail')
-        endowment = Constants.NEGATIVE_ENDOWMENT if neg else Constants.POSITIVE_ENDOWMENT
+        neg = self.session.config.get("negative")
+        tail = self.session.config.get("tail")
+        endowment = (
+            Constants.NEGATIVE_ENDOWMENT if neg else Constants.POSITIVE_ENDOWMENT
+        )
         if tail:
             lotteries = Constants.lotteries.copy()
         else:
@@ -54,14 +58,14 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             p.endowment = endowment
             p.tail = tail
-            p.participant.vars['lotteries'] = lotteries
-            for i  in range(1,6):
-                prange=Constants.price_ranges[i-1]
-                price=round(random.uniform(*prange),2)
-                setattr(p, f'ticket_price_{i}', price)
-            p.ticket_chosen=random.randint(1,5)
-            p.price_chosen=getattr(p, f'ticket_price_{p.ticket_chosen}')
-            p.personal_outcome=random.choice(Constants.tails)
+            p.participant.vars["lotteries"] = lotteries
+            for i in range(1, 6):
+                prange = Constants.price_ranges[i - 1]
+                price = round(random.uniform(*prange), 2)
+                setattr(p, f"ticket_price_{i}", price)
+            p.ticket_chosen = random.randint(1, 5)
+            p.price_chosen = getattr(p, f"ticket_price_{p.ticket_chosen}")
+            p.personal_outcome = random.choice(Constants.tails)
 
 
 class Group(BaseGroup):
@@ -69,13 +73,23 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    def get_proportion(self):
+        t = self.chosen_num_tickets
+        prop = t / (t + 1)
+        return round(prop, 2)
+
     def consent_error_message(self, value):
         if not value:
             return 'bạn phải chọn "đồng ý" để tiếp tục'
-    consent = models.BooleanField(label='',
-                                  choices=[(True, 'CÓ, TÔI ĐỒNG Ý tham gia nghiên cứu này.'),
-                                           (False, 'KHÔNG, TÔI KHÔNG ĐỒNG Ý tham gia nghiên cứu này.')],
-                                  widget=widgets.RadioSelect)
+
+    consent = models.BooleanField(
+        label="",
+        choices=[
+            (True, "CÓ, TÔI ĐỒNG Ý tham gia nghiên cứu này."),
+            (False, "KHÔNG, TÔI KHÔNG ĐỒNG Ý tham gia nghiên cứu này."),
+        ],
+        widget=widgets.RadioSelect,
+    )
     num_tickets_1 = models.IntegerField(min=0, max=20)
     num_tickets_2 = models.IntegerField(min=0, max=20)
     num_tickets_3 = models.IntegerField(min=0, max=20)
@@ -92,7 +106,8 @@ class Player(BasePlayer):
     chosen_num_tickets = models.IntegerField()
     tail = models.BooleanField()
     personal_outcome = models.FloatField()
-
+    intermediary_payoff=models.CurrencyField()
+    
     # comprehension questions block
 
     # END OF comprehension questions block

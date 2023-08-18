@@ -6,7 +6,36 @@ Results. Round {{view.round_number}} out of {{Constants.num_rounds}}
 {% endblock %}
 
 {% block content %}
+
+<div class="lead text-center my-3">
+    General formula to define payoff:<br>
+    <code>
+Endowment - Amount spent on Tickets {% if negative %}
+-
+{% else %}
++
+{% endif %} Lottery Outcome*Proportion
+</code><br>
+    <b>Proportion</b> is defined by the number of tickets you bought (more tickets -> higher the proportion).
+
+</div>
+
+
+
+
 <table class="table table-hover table-stripped">
+
+    <tr>
+        <td>Endowment
+        </td>
+        <td>${{player.endowment}}</td>
+    </tr>
+    <tr>
+        <td>Lottery outcome
+        </td>
+        <td>${{player.personal_outcome}}</td>
+    </tr>
+
     <tr>
         <td>The randomly chosen price level is:
         </td>
@@ -16,6 +45,32 @@ Results. Round {{view.round_number}} out of {{Constants.num_rounds}}
         <td>At this price level you chose to purchase the following number of tickets:</td>
         <td>{{player.chosen_num_tickets}}</td>
     </tr>
+    <tr>
+        <td>
+            Proportion:
+        </td>
+        <td>
+            {{player.get_proportion}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="text-center">Formula:
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="2" class="text-center">
+            <pre>{{player.endowment}} - {{player.chosen_num_tickets}} * {{player.price_chosen}} {{perssign}}  {{player.get_proportion}} * {{player.personal_outcome}} 
+   
+   </pre>
+        </td>
+    </tr>
+    <tr>
+        <td>Your payoff if this round is selected for payoff:</td>
+        <td>{{player.intermediary_payoff}}</td>
+    </tr>
+
+
 </table>
 {% next_button %}
 {% endblock %}

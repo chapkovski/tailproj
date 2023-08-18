@@ -35,8 +35,11 @@ class CQPage(Page):
     instructions = True
 
     def js_vars(self):
-        return dict(endowment=self.player.endowment, num_rounds=Constants.num_rounds,
-                    negative=self.session.config.get("negative"),)
+        return dict(
+            endowment=self.player.endowment,
+            num_rounds=Constants.num_rounds,
+            negative=self.session.config.get("negative"),
+        )
 
     def is_displayed(self):
         return self.round_number == 1
@@ -85,7 +88,8 @@ class BuyingTickets(Page):
     def before_next_page(self):
         p = self.player
         p.chosen_num_tickets = getattr(p, f"num_tickets_{p.ticket_chosen}")
-
+        perssign=-1 if self.session.config.get("negative") else +1
+        p.intermediary_payoff= p.endowment- p.chosen_num_tickets * p.price_chosen + perssign*p.personal_outcome*p.get_proportion()
     form_fields = [
         "num_tickets_1",
         "num_tickets_2",
@@ -98,5 +102,14 @@ class BuyingTickets(Page):
 class Results(Page):
     instructions = True
 
+    def vars_for_template(self):
+        negative=self.session.config.get("negative")
+        perssign = "-" if negative else "+"
+        return dict(negative=negative, perssign=perssign)
 
-page_sequence = [ConsentPage, CQPage, ShowTails, BuyingTickets, Results]
+
+page_sequence = [
+    # ConsentPage, CQPage, ShowTails,
+    BuyingTickets,
+    Results,
+]
