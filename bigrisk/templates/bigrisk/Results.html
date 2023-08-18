@@ -2,18 +2,18 @@
 {% load otree static %}
 
 {% block title %}
-Results. Round {{view.round_number}} out of {{Constants.num_rounds}}
+Kết quả vòng {{view.round_number}} trên {{Constants.num_rounds}}
 {% endblock %}
 
 {% block content %}
 <table class="table table-hover table-stripped">
     <tr>
-        <td>The randomly chosen price level is:
+        <td>Giá ngẫu nhiên được chọn là:
         </td>
         <td>${{player.price_chosen}}</td>
     </tr>
     <tr>
-        <td>At this price level you chose to purchase the following number of tickets:</td>
+        <td>Tại mức giá này bạn đã chọn mua số lượng vé là:</td>
         <td>{{player.chosen_num_tickets}}</td>
     </tr>
 </table>
