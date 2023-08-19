@@ -2,21 +2,21 @@
 {% load otree static %}
 
 {% block title %}
-Results. Round {{view.round_number}} out of {{Constants.num_rounds}}
+Kết quả vòng {{view.round_number}} trên {{Constants.num_rounds}}
 {% endblock %}
 
 {% block content %}
 
 <div class="lead text-center my-3">
-    General formula to define payoff:<br>
+    Công thức tính lợi nhuận của bạn:<br>
     <code>
-Endowment - Amount spent on Tickets {% if negative %}
+Số tiền khởi đầu của vòng này là - Lượng vé đã mua {% if negative %}
 -
 {% else %}
 +
-{% endif %} Lottery Outcome*Proportion
+{% endif %} Kết quả vé*Tỷ lệ
 </code><br>
-    <b>Proportion</b> is defined by the number of tickets you bought (more tickets -> higher the proportion).
+    <b>Tỷ lệ</b> được xác định bởi số lượng vé bạn đã mua (nhiều vé hơn -> tỷ lệ càng cao).
 
 </div>
 
@@ -26,28 +26,28 @@ Endowment - Amount spent on Tickets {% if negative %}
 <table class="table table-hover table-stripped">
 
     <tr>
-        <td>Endowment
+        <td>Số tiền khởi đầu của vòng này là
         </td>
         <td>${{player.endowment}}</td>
     </tr>
     <tr>
-        <td>Lottery outcome
+        <td>Kết quả vé
         </td>
         <td>${{player.personal_outcome}}</td>
     </tr>
 
     <tr>
-        <td>The randomly chosen price level is:
+        <td>Mức giá được chọn ngẫu nhiên là:
         </td>
         <td>${{player.price_chosen}}</td>
     </tr>
     <tr>
-        <td>At this price level you chose to purchase the following number of tickets:</td>
+        <td>Ở mức giá này, bạn đã mua số vé:</td>
         <td>{{player.chosen_num_tickets}}</td>
     </tr>
     <tr>
         <td>
-            Proportion:
+            Tỷ lệ:
         </td>
         <td>
             {{player.get_proportion}}
@@ -66,7 +66,7 @@ Endowment - Amount spent on Tickets {% if negative %}
         </td>
     </tr>
     <tr>
-        <td>Your payoff if this round is selected for payoff:</td>
+        <td>Lợi nhuận của bạn nếu vòng này được chọn là:</td>
         <td>{{player.intermediary_payoff}}</td>
     </tr>
 
