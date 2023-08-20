@@ -64,18 +64,18 @@ Câu hơi kiểm tra độ hiểu trò chơi
     const app = Vue.createApp({
         data() {
             const endowment = js_vars.endowment;
-            const negative_questions = js_vars.negative ? [{ question: "Nếu bạn mua nhiều vé hơn, bạn sẽ giữ lượng phần thưởng lớn hơn, nếu được chọn", answer: true },
-            { question: "Nếu bạn mua ít vé, bạn sẽ giữ lượng phần thưởng lớn hơn, nếu được chọn",  answer : false },] : []
-            const positive_questions = js_vars.negative ? [] : [{ question: "Nếu bạn mua nhiều vé hơn, bạn sẽ giữ lượng phần thưởng lớn hơn, nếu được chọn", answer: true },
-            { question: "Nếu bạn mua ít vé, bạn sẽ giữ lượng phần thưởng lớn hơn, nếu được chọn", answer: false },]
+            const negative_questions = js_vars.negative ? [{ question: "Nếu bạn mua nhiều vé hơn, phần tiền mà bạn nhận được từ tổng giải thưởng sẽ lớn hơn, nếu được chọn", answer: true },
+            { question: "Nếu bạn mua ít vé hơn, phần tiền mà bạn nhận được từ tổng giải thưởng sẽ lớn hơn, nếu được chọn",  answer : false },] : []
+            const positive_questions = js_vars.negative ? [] : [{ question: "Nếu bạn mua nhiều vé hơn, phần tiền mà bạn nhận được từ tổng giải thưởng sẽ lớn hơn, nếu được chọn", answer: true },
+            { question: "Nếu bạn mua ít vé hơn, phần tiền mà bạn nhận được từ tổng giải thưởng sẽ lớn hơn, nếu được chọn", answer: false },]
             const endowments = Array(5).fill(endowment).map((element, index) => endowment * (index + 1))
             const questions = [
                 { question: "Ở mỗi lớp _________ Học sinh sẽ được nhận __________ mỗi vòng.", answer: "Một học sinh", options: ["Một học sinh", "Hai học sinh", 'Ba học sinhs', 'Bốn học sinh', 'Năm học sinh'] },
                 { question: "Ở mỗi lớp _________ Học sinh sẽ được nhận __________ mỗi vòng.", answer: "1", options: ["1", "2", "3", "4", '5'] },
                 { question: "Tổng số tiền bạn có đầu mỗi vòng là?", answer: endowment, options: [endowments] },
                 { question: "Có bao nhiêu vòng chơi tổng cộng?", answer: js_vars.num_rounds },
-                { question: "Vé là miễn phí (bạn sẽ không mất tiền để mua chúng).", answer: false },
-                { question: "Giá hiển thị của vé là khác nhau, và chỉ MỘT trong số chúng sẽ được chọn ngẫu nhiên.", answer: true },
+                { question: "Vé là miễn phí và bạn sẽ không mất tiền để mua chúng.", answer: false },
+                { question: "Chỉ có 1 loại vé để mua - nhưng có các tình huống với mức giá khác nhau. Chúng tôi sẽ hỏi số lượng vé bạn mua cho mỗi mức giá đó bằng số tiền được cung cấp..", answer: true },
                 ...positive_questions,
                 ...negative_questions,
             ]
