@@ -58,7 +58,7 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
 <script>
   const app = Vue.createApp({
     data() {
-      const prob_msg = js_vars.negative ? 'Tỉ lệ phần được bảo vệ:' : 'Tỉ lệ phần được nhận:'
+      const prob_msg = js_vars.negative ? 'Phần được bảo vệ:' : 'Phần được nhận:'
       return {
         prob_msg,
         probabilities: js_vars.probs,
