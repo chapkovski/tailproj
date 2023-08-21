@@ -125,9 +125,9 @@ class FinalResults(Page):
 
 
 page_sequence = [
-    # ConsentPage,
-    # CQPage,
-    # ShowTails,
+    ConsentPage,
+    CQPage,
+    ShowTails,
     BuyingTickets,
     Results,
     FinalResults,
