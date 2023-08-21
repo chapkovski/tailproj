@@ -50,9 +50,20 @@ Số tiền khởi đầu của vòng này là - Lượng vé đã mua {% if neg
             Phần được nhận:
         </td>
         <td>
-            {{player.get_proportion}}
+            {{ get_formatted_proportion }}
         </td>
     </tr>
+     {% if  negative %}
+     <tr>
+        <td>
+            Phần được nhận:
+        </td>
+        <td>
+            {{ get_reversed_prop }}
+        </td>
+    </tr>
+     {% else %}
+     {% endif %}
     <tr>
         <td colspan="2" class="text-center">Công thức tính lợi nhuận:
         </td>
@@ -60,7 +71,7 @@ Số tiền khởi đầu của vòng này là - Lượng vé đã mua {% if neg
     </tr>
     <tr>
         <td colspan="2" class="text-center">
-            <pre>{{player.endowment}} - {{player.chosen_num_tickets}} * {{player.price_chosen}} {{perssign}}  {{player.get_proportion}} * {{player.personal_outcome}} 
+            <pre>{{player.endowment}} - {{player.chosen_num_tickets}} * {{player.price_chosen}} {{perssign}} {{ get_formatted_proportion }} * {{player.personal_outcome}} 
    
    </pre>
         </td>

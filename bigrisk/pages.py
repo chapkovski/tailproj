@@ -110,7 +110,9 @@ class Results(Page):
     def vars_for_template(self):
         negative = self.session.config.get("negative")
         perssign = "-" if negative else "+"
-        return dict(negative=negative, perssign=perssign)
+        return dict(negative=negative, perssign=perssign,
+                    get_formatted_proportion=f"{self.player.get_proportion() * 100:.0f}%",
+                    get_reversed_prop = f"{(self.player.get_rev_proportion()) * 100:.0f}%")
     def before_next_page(self):
         if self.round_number==Constants.num_rounds:
             self.player.set_final_payoff()        
@@ -123,9 +125,9 @@ class FinalResults(Page):
 
 
 page_sequence = [
-    ConsentPage,
-    CQPage,
-    ShowTails,
+    # ConsentPage,
+    # CQPage,
+    # ShowTails,
     BuyingTickets,
     Results,
     FinalResults,

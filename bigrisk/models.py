@@ -18,7 +18,9 @@ doc = """
 Tail, no median lottery project
 """
 
-portion = lambda x: float(1-1/(x+1))
+portion = lambda x: float(1 - 1 / (x + 1))
+
+
 class Constants(BaseConstants):
     name_in_url = "bigrisk"
     players_per_group = None
@@ -32,13 +34,9 @@ class Constants(BaseConstants):
     with open(f"{path_to_data}lotteries.csv", "r") as f:
         reader = csv.DictReader(f)
         lotteries = [i.get("header") for i in reader]
-    num_tickets=range(1,30)
-    
-    
-    tickets = [
-        {"n":i, "formatted_portion": f"{portion(i):.3%}"}
-        for i in num_tickets
-    ]
+    num_tickets = range(1, 30)
+
+    tickets = [{"n": i, "formatted_portion": f"{portion(i):.3%}"} for i in num_tickets]
     pprint(tickets)
     with open(f"{path_to_data}heavytail.csv", "r") as f:
         tails = [float(line.strip()) for line in f.readlines()]
@@ -48,7 +46,7 @@ class Subsession(BaseSubsession):
     def creating_session(self):
         if self.round_number == 1:
             for p in self.session.get_participants():
-                p.vars['chosen_round']=random.randint(1,Constants.num_rounds)
+                p.vars["chosen_round"] = random.randint(1, Constants.num_rounds)
         neg = self.session.config.get("negative")
         tail = self.session.config.get("tail")
         endowment = (
@@ -59,7 +57,7 @@ class Subsession(BaseSubsession):
         else:
             lotteries = Constants.lotteries.copy()[:4]
         for p in self.get_players():
-            p.chosen_round=p.participant.vars['chosen_round']
+            p.chosen_round = p.participant.vars["chosen_round"]
             p.endowment = endowment
             p.tail = tail
             p.participant.vars["lotteries"] = lotteries
@@ -81,10 +79,14 @@ class Player(BasePlayer):
         self.payoff = self.in_round(self.chosen_round).intermediary_payoff
 
     def get_proportion(self):
+        neg = self.session.config.get("negative")
         t = self.chosen_num_tickets
         prop = t / (t + 1)
+        if neg:
+            prop = 1 - prop
         return round(prop, 2)
-
+    def get_rev_proportion(self):
+        return 1-self.get_proportion()
     def consent_error_message(self, value):
         if not value:
             return 'bạn phải chọn "đồng ý" để tiếp tục'
