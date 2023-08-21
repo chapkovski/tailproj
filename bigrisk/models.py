@@ -24,7 +24,7 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 10
     POSITIVE_ENDOWMENT = 10
-    NEGATIVE_ENDOWMENT = 200
+    NEGATIVE_ENDOWMENT = 50
     price_ranges = ((0.01, 0.50), (0.50, 1.50), (1.50, 2.75), (2.75, 5), (5, 10))
     # READ THE DATA
     path_to_data = "./data/"
