@@ -103,21 +103,16 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
 {% endfor %}
 </ul>
 
+
+
+{% if  negative %}    
 <table class="table table-hover table-stripped my-3">
   <thead>
-  {% if  negative %}    
      <tr>
       <th>Số lượng vé
       </th>
       <th> Phần được bảo vệ</th>
     </tr>
-  {% else %}
-    <tr>
-      <th>Số lượng vé
-      </th>
-      <th>Phần được nhận</th>
-    </tr>
-  {% endif %}
   </thead>
   {% for t in Constants.tickets %}
   <tr>
@@ -126,6 +121,23 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
   </tr>
   {% endfor %}
 </table>
+{% else %}
+<table class="table table-hover table-stripped my-3">
+  <thead>
+    <tr>
+      <th>Số lượng vé
+      </th>
+      <th>Phần được nhận</th>
+    </tr>
+  </thead>
+  {% for t in Constants.tickets %}
+  <tr>
+    <td>{{t.n}}</td>
+    <td>{{t.formatted_portion }} </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
 
 
 
