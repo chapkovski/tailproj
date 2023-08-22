@@ -1,125 +1,98 @@
-﻿{% extends "global/Page.html" %}
+{% extends "global/Page.html" %}
 {% load otree static %}
 
 {% block title %}
-Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
+Kết quả vòng {{view.round_number}} trên {{Constants.num_rounds}}
 {% endblock %}
 
 {% block content %}
-<div class="card my-3">
-  <div class="card-body">
-    <div class="card-text">
-      Số tiền của bạn: <b>{{player.endowment|c}}</b></div>
-  </div>
-</div>
-<style>
-  .error {
-    border-color: red;
-  }
-</style>
-<script src="https://unpkg.com/vue@next"></script>
-<script src="https://unpkg.com/vue-router@4"></script>
-<script>
 
-</script>
+<div class="lead text-center my-3">
+    Công thức tính lợi nhuận của bạn:<br>
+    <code>
+Số tiền khởi đầu của vòng này là - Lượng vé đã mua {% if negative %}
+-
+{% else %}
++
+{% endif %} Kết quả vé*Tỷ lệ
+</code><br>
+    <b>Tỷ lệ</b> được xác định bởi số lượng vé bạn đã mua (nhiều vé hơn -> tỷ lệ càng cao).
 
-<div id="app">
-  {% verbatim %}
-    <h5>Ở mỗi mức giá sau đây, bạn muốn mua bao nhiêu vé?</h5>
-    <div class="alert alert-info lead text-center">
-        Lưu ý: Chỉ một trong những mức giá sau đây sẽ được chọn!</div>
-  <table class="table table-hover table-stripped my-3">
-    <thead>
-      <tr>
-        <th>Nếu mức giá là:</th>
-        <th>Số lượng vé tôi sẽ mua là:</th>
-        <th>Đã chi:</th>
-        <th>Còn lại:</th>
-        <th style="max-width: 20%; width:20%!important">{{prob_msg}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(price, index) in prices" :key="index">
-        <td>${{ price.toFixed(2) }}</td>
-        <td>
-          <input :name="`num_tickets_${index+1}`" required :class="{ 'error': spent[index] > budget }"
-            class="form-control" type="number" min="0" :max="getMaxTickets(price)" v-model.number="tickets[index]"
-            @input="calculateSpentAndLeft(index, price)" />
-        </td>
-        <td>${{ formatNumber(spent[index]) }}</td>
-        <td>${{ formatNumber(left[index]) }}</td>
-        <td>{{ getProbability(tickets[index]) }}</td>
-      </tr>
-    </tbody>
-  </table>
-  {% endverbatim %}
 </div>
 
-<script>
-  const app = Vue.createApp({
-    data() {
-      const prob_msg = js_vars.negative ? 'Phần được bảo vệ:' : 'Phần được nhận:'
-      return {
-        prob_msg,
-        probabilities: js_vars.probs,
-        prices: js_vars.prices,
-        tickets: Array(js_vars.prices.length).fill(null),  // Assume that we have five price levels
-        spent: Array(js_vars.prices.length).fill(null),
-        budget: js_vars.endowment,
-        left: Array(js_vars.prices.length).fill(js_vars.endowment),
-      }
-    },
-    methods: {
-      formatNumber(number) {
-        return number ? number.toFixed(2) : '0.00';
-      },
-      getMaxTickets(price) {
-        return Math.floor(this.budget / price);
-      },
-      calculateSpentAndLeft(index, price) {
-        this.spent[index] = (this.tickets[index] * price);
-        this.left[index] = this.budget - this.spent[index];
-      },
-      getProbability(ticketsQuantity) {
-        const t=ticketsQuantity
-        const prob=t/(1+t)*100
-    
-        return prob.toFixed(2)
-      }
-    }
-  });
-
-  app.mount('#app');
-</script>
-
- <div class="my-3"> {% next_button %}</div>
-
-<ul class="list-group list-group-flush my-3"></ul>
-{% for l in participant.vars.lotteries %}
-
-<li class="list-group-item">{{l}}</li>
 
 
-{% endfor %}
-</ul>
 
-<table class="table table-hover table-stripped my-3">
-  <thead>
+<table class="table table-hover table-stripped">
+
     <tr>
-      <th>Số lượng vé
-      </th>
-      <th>Phần được nhận</th>
+        <td>Số tiền khởi đầu của vòng này là
+        </td>
+        <td>${{player.endowment}}</td>
     </tr>
-  </thead>
-  {% for t in Constants.tickets %}
-  <tr>
-    <td>{{t.n}}</td>
-    <td>{{t.formatted_portion }} </td>
-  </tr>
-  {% endfor %}
+    <tr>
+        <td>Kết quả vé
+        </td>
+        <td>${{player.personal_outcome}}</td>
+    </tr>
+
+    <tr>
+        <td>Mức giá được chọn ngẫu nhiên là:
+        </td>
+        <td>${{player.price_chosen}}</td>
+    </tr>
+    <tr>
+        <td>Ở mức giá này, bạn đã mua số vé:</td>
+        <td>{{player.chosen_num_tickets}}</td>
+    </tr>
+    {% if  negative %}
+     <tr>
+        <td>
+            Phần mà bạn không được bảo vệ:
+        </td>
+        <td>
+            {{ get_formatted_proportion }}
+        </td> 
+    </tr>
+     {% else %} 
+        <tr>
+        <td>
+            Phần được nhận:
+        </td>
+        <td>
+            {{ get_formatted_proportion }}
+        </td>
+    </tr>
+     {% endif %}
+     {% if  negative %}
+     <tr>
+        <td>
+            Phần không được bảo vệ:
+        </td>
+        <td>
+            {{ get_reversed_prop }}
+        </td>
+    </tr>
+     {% else %}
+     {% endif %}
+    <tr>
+        <td colspan="2" class="text-center">Công thức tính lợi nhuận:
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="2" class="text-center">
+            <pre>{{player.endowment}} - {{player.chosen_num_tickets}} * {{player.price_chosen}} {{perssign}} {{ get_formatted_proportion }} * {{player.personal_outcome}} 
+   
+   </pre>
+        </td>
+    </tr>
+    <tr>
+        <td>Lợi nhuận của bạn nếu vòng này được chọn là:</td>
+        <td>{{player.intermediary_payoff}}</td>
+    </tr>
+
 
 </table>
-
-
-
+{% next_button %}
 {% endblock %}
