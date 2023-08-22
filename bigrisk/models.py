@@ -30,14 +30,17 @@ class Constants(BaseConstants):
     price_ranges = ((0.01, 0.50), (0.50, 1.50), (1.50, 2.75), (2.75, 5), (5, 10))
     # READ THE DATA
     path_to_data = "./data/"
-
-    with open(f"{path_to_data}lotteries.csv", "r") as f:
-        reader = csv.DictReader(f)
-        lotteries = [i.get("header") for i in reader]
+    lotteries = {}
+    for i in ['lotteries_positive', 'lotteries_negative']:
+        with open(f"{path_to_data}{i}.csv", "r") as f:
+            reader = csv.DictReader(f)
+            lotteries[i] = [i.get("header") for i in reader]
+    
+    
     num_tickets = range(1, 30)
 
     tickets = [{"n": i, "formatted_portion": f"{portion(i):.3%}"} for i in num_tickets]
-    pprint(tickets)
+    
     with open(f"{path_to_data}heavytail.csv", "r") as f:
         tails = [float(line.strip()) for line in f.readlines()]
 
@@ -52,10 +55,12 @@ class Subsession(BaseSubsession):
         endowment = (
             Constants.NEGATIVE_ENDOWMENT if neg else Constants.POSITIVE_ENDOWMENT
         )
+        curlotteries = Constants.lotteries["lotteries_negative"] if neg else Constants.lotteries["lotteries_positive"]
+
         if tail:
-            lotteries = Constants.lotteries.copy()
+            lotteries = curlotteries.copy()
         else:
-            lotteries = Constants.lotteries.copy()[:4]
+            lotteries =curlotteries.copy()[:4]
         for p in self.get_players():
             p.chosen_round = p.participant.vars["chosen_round"]
             p.endowment = endowment
