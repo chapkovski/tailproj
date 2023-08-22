@@ -25,9 +25,9 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
 
 <div id="app">
   {% verbatim %}
-    <h5>Ở mỗi mức giá sau đây, bạn muốn mua bao nhiêu vé?</h5>
-    <div class="alert alert-info lead text-center">
-        Lưu ý: Chỉ một trong những mức giá sau đây sẽ được chọn!</div>
+  <h5>Ở mỗi mức giá sau đây, bạn muốn mua bao nhiêu vé?</h5>
+  <div class="alert alert-info lead text-center">
+    Lưu ý: Chỉ một trong những mức giá sau đây sẽ được chọn!</div>
   <table class="table table-hover table-stripped my-3">
     <thead>
       <tr>
@@ -81,9 +81,9 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
         this.left[index] = this.budget - this.spent[index];
       },
       getProbability(ticketsQuantity) {
-        const t=ticketsQuantity
-        const prob=t/(1+t)*100
-    
+        const t = ticketsQuantity
+        const prob = t / (1 + t) * 100
+
         return prob.toFixed(2)
       }
     }
@@ -92,7 +92,7 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
   app.mount('#app');
 </script>
 
- <div class="my-3"> {% next_button %}</div>
+<div class="my-3"> {% next_button %}</div>
 
 <ul class="list-group list-group-flush my-3"></ul>
 {% for l in participant.vars.lotteries %}
@@ -108,7 +108,14 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
     <tr>
       <th>Số lượng vé
       </th>
-      <th>Phần được bảo vệ</th>
+      <th>
+        {% if negative %}
+
+        Phần được bảo vệ
+        {% else %}
+        Phần được nhận
+        {% endif %}
+      </th>
     </tr>
   </thead>
   {% for t in Constants.tickets %}

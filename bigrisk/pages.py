@@ -72,7 +72,9 @@ class BuyingTickets(Page):
         p = self.player
         form = self.get_form()
         fdata = []
-
+        negative = self.session.config.get("negative")
+      
+        
         for i, f in enumerate(form, start=1):
             ticket_price = getattr(p, f"ticket_price_{i}")
             t = {
@@ -81,7 +83,7 @@ class BuyingTickets(Page):
             }
             fdata.append(t)
 
-        return dict(data_to_show=fdata)
+        return dict(data_to_show=fdata, negative=negative)
 
     form_model = "player"
 
