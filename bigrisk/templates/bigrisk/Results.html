@@ -45,7 +45,17 @@ Số tiền khởi đầu của vòng này là - Lượng vé đã mua {% if neg
         <td>Ở mức giá này, bạn đã mua số vé:</td>
         <td>{{player.chosen_num_tickets}}</td>
     </tr>
-    <tr>
+    {% if  negative %}
+     <tr>
+        <td>
+            Phần mà bạn không được bảo vệ:
+        </td>
+        <td>
+            {{ get_reversed_prop }}
+        </td>
+    </tr>
+     {% else %} 
+        <tr>
         <td>
             Phần được nhận:
         </td>
@@ -53,10 +63,11 @@ Số tiền khởi đầu của vòng này là - Lượng vé đã mua {% if neg
             {{ get_formatted_proportion }}
         </td>
     </tr>
+     {% endif %}
      {% if  negative %}
      <tr>
         <td>
-            Phần được nhận:
+            Phần không được bảo vệ:
         </td>
         <td>
             {{ get_reversed_prop }}
