@@ -50,6 +50,9 @@ Số tiền khởi đầu của vòng này là - Lượng vé đã mua {% if neg
         <td>
             Phần mà bạn không được bảo vệ:
         </td>
+        <td>
+            {{ get_formatted_proportion }}
+        </td> 
     </tr>
      {% else %} 
         <tr>
