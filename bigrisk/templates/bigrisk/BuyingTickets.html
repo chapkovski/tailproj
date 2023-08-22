@@ -108,7 +108,16 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
     <tr>
       <th>Số lượng vé
       </th>
-      <th>Phần được nhận</th>
+
+     {% if  negative %}
+        <td>
+            Phần được bảo vệ:
+        </td>
+     {% else %}
+      <th>
+        Phần được nhận:
+      </th> 
+     {% endif %}
     </tr>
   </thead>
   {% for t in Constants.tickets %}
