@@ -48,7 +48,7 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
         </td>
         <td>${{ formatNumber(spent[index]) }}</td>
         <td>${{ formatNumber(left[index]) }}</td>
-        <td>{{ getProbability(tickets[index]) }}%</td>
+        <td>{{ getProbability(tickets[index]) }}</td>
       </tr>
     </tbody>
   </table>
@@ -108,7 +108,7 @@ Mua vé. Vòng {{view.round_number}} trên {{Constants.num_rounds}}
     <tr>
       <th>Số lượng vé
       </th>
-      <th>Phần được nhận</th>
+      <th>Phần được bảo vệ</th>
     </tr>
   </thead>
   {% for t in Constants.tickets %}
